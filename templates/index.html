@@ -1,0 +1,231 @@
+{% extends "material/base.html" %}
+
+{% block content %}
+<div class="showcase container purple lighten-3">
+	<div class="row">
+		<div class="col 12 m10 offset-ml center">
+			<h2>Heart Disease Predictor</h2>
+			<p>ML Web App</p>
+			<a href="{{url_for('index')}}" class="btn btn-small purple white-text wave-effect waves-dark">Reset</a>
+			<a href="{{url_for('preview')}}" class="btn btn-small white purple-text wave-effect waves-dark">View Dataset</a>
+			<a href="{{url_for('about')}}" class="btn btn-small white purple-text wave-effect waves-dark">About Me</a>
+		</div>
+	</div>
+</div>
+
+<section>
+	<div class="row">
+		<div class="container">
+			<div class="col s12 m6 offers">
+			<form action="{{url_for('analyze')}}" method="POST">
+	            <div class="input-field">
+	            	<input placeholder="Age" name="age" id="age" type="text" class="validate" required="">
+	                 <label for="age">Age</label>
+	            </div>
+
+	            <div class="input-field">
+	            	<input placeholder="Resting Blood Pressure" name="trestbps" id="trestbps" type="text" class="validate" required="">
+	                 <label for="trestbps">Resting Blood Pressure (in mm Hg on admission to the hospital)</label>
+	            </div>
+
+	            <div class="input-field">
+	            	<input placeholder="Serum Cholestoral" name="chol" id="chol" type="text" class="validate" required="">
+	                 <label for="chol">Serum Cholestoral in mg/d</label>
+	            </div>
+
+
+	            <div class="input-field">
+	            	<input placeholder="Resting Electrocardiographic Results" name="restecg" id="restecg" type="text" class="validate" required="">
+	                 <label for="restecg">Resting Electrocardiographic Results</label>
+	            </div>
+
+	            <div class="input-field">
+	            	<input placeholder="Maximum Heart Rate Achieved" name="thalach" id="thalach" type="text" class="validate" required="">
+	                 <label for="thalach">Maximum Heart Rate Achieved</label>
+	            </div>
+
+	            <div class="input-field">
+	            	<input placeholder="ST Depression Induced By Exercise Relative To Rest" name="oldpeak" id="oldpeak" type="text" class="validate" required="">
+	                 <label for="oldpeak"> ST Depression Induced By Exercise Relative To Rest</label>
+	            </div>
+
+	            <div class="input-field">
+	            	<input placeholder="Umber Of Major Vessels" name="ca" id="ca" type="number" min="0" max="3" class="validate" required="">
+	                 <label for="ca">Umber Of Major Vessels (0-3) Colored By Flourosopy</label>
+	            </div>
+
+               <div class="input-field col s12">
+	            	 <select name="sex">
+					      <option  value="" disabled selected>Choose your option</option>
+					      <option value="1">Male</option>
+					      <option value="0">Female</option>
+					</select>
+				    <label>Sex</label>
+	            </div>
+
+                 <div class="input-field col s12">
+	            	 <select name="cp">
+					      <option  value="" disabled selected>Choose your option</option>
+					      <option value="1">Typical Angina</option>
+					      <option value="2">Atypical Angina</option>
+					      <option value="3">Non-Anginal Pain</option>
+					      <option value="4">Asymptomatic</option>
+					</select>
+				    <label>Cest Pain Type</label>
+	            </div>
+
+	            <div class="input-field col s12">
+	            	 <select name="fbs">
+					      <option  value="" disabled selected>Choose your option</option>
+					      <option value="1">Ture</option>
+					      <option value="0">False</option>
+					</select>
+				    <label>Fasting Blood Sugar > 120 mg/dl</label>
+	            </div>
+
+	            <div class="input-field col s12">
+	            	 <select name="exang">
+					      <option  value="" disabled selected>Choose your option</option>
+					      <option value="1">Yes</option>
+					      <option value="0">No</option>
+					</select>
+				    <label>Exercise Induced Angina</label>
+	            </div>
+
+	            <div class="input-field col s12">
+	            	 <select name="slope">
+					      <option  value="" disabled selected>Choose your option</option>
+					      <option value="1">upsloping</option>
+					      <option value="2">flat</option>
+					      <option value="3">downsloping</option>
+					</select>
+				    <label>Slope Of The Peak Exercise ST Segment</label>
+	            </div>
+
+	            <div class="input-field col s12">
+	            	 <select name="thal">
+					      <option  value="" disabled selected>Choose your option</option>
+					      <option value="3">Normal</option>
+					      <option value="6">Fixed Defect</option>
+					      <option value="7">Reversable Defect</option>
+					</select>
+				    <label>Thal</label>
+	            </div>
+
+
+	            <div class="input-field col s12">
+                    <select name="model_choice">
+                        <option value="" disabled selected>Select Model</option>
+                        <option value="logitmodel">Logistic Regression</option>
+						<option value="svmmodel">SVM</option>
+                        <option value="dtree">Decision Tree</option>
+                        <option value="rrmodel">Random Forrest</option>
+                        <option value="nbmodel">Navie Bayes Model</option>
+                    </select>
+                    <label for="role">Select ML Algorithm</label>
+                  </div>
+
+
+
+               <button class="right btn waves-effect waves-light" type="submit" name="submit">
+					    Submit
+			   </button>
+
+			   <button type="reset" class="right btn waves-effect waves-light">
+                   Clear
+			   </button>
+
+
+			</form>
+            </div>
+            <div class="container">
+  <div class="col s12 m5 offers">
+	    <div class="card-panel purple lighten-4 grey-text text-darken-4 z-depth-0">
+
+			<p>age: {{ age }}</p>
+			<p>sex: {{ sex }}</p>
+			<p>cp: {{ cp }} </p>
+			<p>trestbps: {{ trestbps }}</p>
+			<p>chol: {{ chol }}</p>
+			<p>fbs: {{ fbs }}</p>
+			<p>restecg: {{ restecg }} </p>
+			<p>thalach: {{ thalach }}</p>
+
+			<p>chol: {{ exang }}</p>
+			<p>fbs: {{ oldpeak }}</p>
+			<p>restecg: {{ slope }} </p>
+			<p>thalach: {{ ca }}</p>
+			<p>thalach: {{ target }}</p>
+			Using {{ model_selected }} on {{ clean_data }}
+
+	    </div>
+
+
+        <h5>Prediction</h5>
+          <div class="collection" role="alert">
+          	<p>Acuuracy : {{result_accuracy}}</p>
+            <p  class="collection-item active purple">Predicted result:</p>
+              {% if result_prediction == [1] %}
+              <h1>Yes</h1>
+              {% elif result_prediction == [0] %}
+              <h1>No</h1>
+              {% else %}
+              <p></p>
+
+
+              {% endif%}
+        </div>
+
+
+
+  </div>
+</div>
+		</div>
+
+
+	</div>
+
+<!--  <div class="container">
+  <div class="col s12 m4 offers">
+    <div class="card-panel purple lighten-4 grey-text text-darken-4 z-depth-0">
+
+		<p>age: {{ age }}</p>
+		<p>sex: {{ sex }}</p>
+		<p>cp: {{ cp }} </p>
+		<p>trestbps: {{ trestbps }}</p>
+		<p>chol: {{ chol }}</p>
+		<p>fbs: {{ fbs }}</p>
+		<p>restecg: {{ restecg }} </p>
+		<p>thalach: {{ thalach }}</p>
+
+		<p>chol: {{ exang }}</p>
+		<p>fbs: {{ oldpeak }}</p>
+		<p>restecg: {{ slope }} </p>
+		<p>thalach: {{ ca }}</p>
+		<p>thalach: {{ target }}</p>
+		Using {{ model_selected }} on {{ clean_data }}
+
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+
+</section>
+
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+
+<script type="text/javascript">
+ 	$(document).ready(function() {
+    $('select').material_select();
+});
+ </script>
+
+{% endblock %}
